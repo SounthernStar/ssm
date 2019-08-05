@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+        <bean id="accountDao" class = "com.example.lihuan.dao.AccountDao" abstract="true"/>
+        <bean id="accountServiceImpl" class="com.example.lihuan.service.impl.AccountServiceImpl">
+            <!--<property name="accountDao" ref="accountDao"/>-->
+        </bean>
+        <bean id="aspect1" class="com.example.lihuan.aop.Aspect1"></bean>
+        <aop:config>
+            <aop:pointcut id="pointcut1" expression="execution(* com.example.lihuan.service.impl.AccountServiceImpl.*(..))"/>
+            <aop:aspect ref="aspect1">
+                <aop:before method="before" pointcut-ref="pointcut1"/>
+                <aop:around method="around" pointcut-ref="pointcut1"/>
+                <aop:after method="after" pointcut-ref="pointcut1"/>
+             </aop:aspect>
+        </aop:config>
+</beans>
